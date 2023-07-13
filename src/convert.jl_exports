@@ -1,0 +1,19 @@
+export toint, tofloat
+
+export tostr
+export tostr´
+export tostr1
+export tostr2
+export tostr3
+export tostr4
+export tostr5
+export tostr6
+export tostr7
+export tostr8
+export tostrf
+
+export sizehuman
+
+export isint, isfloat
+
+export trytoint, trytofloat

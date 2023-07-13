@@ -1,0 +1,26 @@
+
+
+"""
+    erroruser(msg, exitcode=99)
+    EnduserError(msg, exitcode=99)
+
+The function `erroruser`, similarly to `Base.error`, simply throws an exception, the new `EnduserError`.
+This exception is meant to provide high-level error info to, say, end users; it is meant to error-exit without showing a backtrace.
+It will not show a backtrace in the REPL; users of code throwing this exception can catch and handle it similarly.
+(The exit code is optional; you can use it in your try/catch to call `exit`.)
+"""
+:erroruser, :EnduserError
+
+
+"""
+    tameerror(f::Function)
+
+Wraps a call to function f in try/catch:
+* On SIGPIPE:        no error msg; no backtrace; exit code 0   (for broken Unix pipes).
+* On interrupt:      no error msg; no backtrace; exit code 130 (even in script).
+* On `EnduserError`: error msg but no backtrace; exit code given by exception's `exitcode`.
+* ..rethrows otherwise.
+"""
+:tameerror
+
+

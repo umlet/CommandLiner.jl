@@ -1,0 +1,12 @@
+
+
+"""
+    1.0 |> sin |> cos |> sin |> :mynewvariable
+
+By `using CommandLiner.ReverseAssign` (meant for REPL sessions), you can reverse-assign into a variable (given by a symbol to the right).
+
+This avoids having to go back at the start of the line to enter some `x =` there.
+
+It works by overwriting the function call operator for `Symbol`.
+"""
+:reverseassign

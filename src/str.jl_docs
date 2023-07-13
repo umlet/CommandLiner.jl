@@ -1,0 +1,13 @@
+
+
+"""
+    ext(path)
+
+Returns file name extension. It has the same behavior as `splitext`, but without "." as prefix.
+- "file.txt"    -> "txt"
+- "file."       -> ""
+- "file"        -> `nothing`
+- ".file"       -> `nothing`
+- "."           -> `nothing`
+"""
+:ext

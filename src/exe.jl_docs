@@ -1,0 +1,11 @@
+
+
+
+"""
+    exe([string, strin,..]; fail=true, splitlines=true)
+
+Wrapper to `run(::Command)`. Fails with exception on non-tezo exit code OR returns tuple of (returncode, outs, errs).
+
+The latter two are split into lines by default; strings otherwise.
+"""
+:exe

@@ -1,0 +1,10 @@
+
+
+"""
+    @main
+
+File guard; if run as script, calls your script's `main` function, wrapped in `tameerror` (handling SIGPIPEs etc.).
+
+Also see: `tameerror`. 
+"""
+:@main
