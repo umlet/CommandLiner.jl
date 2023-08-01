@@ -71,14 +71,14 @@ flat(args...) = flatten_(args...) |> collect
 
 
 
-
+# TODO ???
 # curried 'foreach'
 apply(args...) = foreach(args...)
 apply(f::Function) = X -> apply(f, X)
 
 
 
-
+# TODO ???
 # yet more synonyms
 hd(args...) = tk(args...)
 
