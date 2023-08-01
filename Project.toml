@@ -1,7 +1,7 @@
 name = "CommandLiner"
 uuid = "dab3b9ab-a280-4855-a173-bba60dabf33a"
 authors = ["martin@umlet.com>"]
-version = "0.1.0"
+version = "0.2.0"
 
 [deps]
 OrderedCollections = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
