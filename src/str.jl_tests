@@ -1,0 +1,18 @@
+
+
+@testset "Str" begin
+    @test iscomment("#foo") === true
+
+    @test splitind1("abcd", 3) == "ab"
+    @test splitind2("abcd", 3) == "d"
+    
+    @test jn("abc", "x") == "axbxc"
+    @test ["ab", "cd"] |> jn('x') == "abxcd"
+    @test ["ab", "cd"] |> jn("x") == "abxcd"
+    
+    @test ext("f.txt") == "txt"  # TODO move to Filesys
+    @test ext("f.") == ""
+    @test ext(".conf") === nothing
+    @test ext(".") === nothing    
+end
+

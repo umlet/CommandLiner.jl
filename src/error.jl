@@ -3,16 +3,25 @@ module Error
 
 
 
+@kwdef mutable struct _Conf
+    showfullbt = false
+end
+const CONF = _Conf()
+
+
+
+
 struct EnduserError <: Exception
     msg::String
     exitcode::Int64
     EnduserError(msg::AbstractString, exitcode::Int64=99) = new(msg, exitcode)
 end
 
-erroruser(msg::AbstractString, exitcode::Int64=99) = throw(EnduserError(msg, exitcode))
+function erroruser(msg::AbstractString, exitcode::Int64=99)
+    !CONF.showfullbt  &&  throw(EnduserError(msg, exitcode))
+    error(msg)
+end
 
-Base.showerror(io::IO, ex::EnduserError) = print(io, ex.msg)
-Base.showerror(io::IO, ex::EnduserError, bt; backtrace=false) = showerror(io, ex)
 
 
 
@@ -39,6 +48,8 @@ end
 
 
 
+include("error.jl_base")
 include("error.jl_exports")
 include("error.jl_docs")
 end # module
+

@@ -2,12 +2,9 @@
 
 export cl
 
+export filter_, map_, take_, partition_, dropwhile_, flatten_
 
-export fl_, mp_, tk_, pt_, drwhile_
-
-export fl,  mp,  tk,  pt,  drwhile
-
-export flatten_, flatten
+export fl,      mp,   tk,    pt,         drwhile,    flat
 
 
 export apply
@@ -23,4 +20,7 @@ export sortbyval
 
 
 export second
+
+
+export peekgeneric
 

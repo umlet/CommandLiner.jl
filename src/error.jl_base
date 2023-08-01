@@ -1,0 +1,5 @@
+
+
+Base.showerror(io::IO, ex::EnduserError) = print(io, ex.msg)
+Base.showerror(io::IO, ex::EnduserError, bt; backtrace=false) = showerror(io, ex)
+

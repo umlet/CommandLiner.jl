@@ -1,0 +1,25 @@
+
+
+@testset "Error" begin
+
+    # default behavior: throw EnduserError
+    @test begin
+        try
+            erroruser("foo")            
+        catch e
+            isa(e, EnduserError)
+        end
+    end
+
+    # full backtrace behavior: use error()
+    @test begin
+        CommandLiner.Error.CONF.showfullbt = true
+        try
+            erroruser("foo")            
+        catch e
+            !isa(e, EnduserError)
+        end
+    end
+
+end
+

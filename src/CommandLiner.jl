@@ -16,9 +16,9 @@ module CommandLiner
 
 
 # iterator tweak for certain REPL use cases
-include("iterhack.jl")
-import .IterHack: map, filter
-include("iterhack.jl_exports")
+# include("iterhack.jl")
+# import .IterHack: map, filter
+# include("iterhack.jl_exports")
 
 
 

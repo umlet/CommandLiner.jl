@@ -1,0 +1,58 @@
+
+
+@testset "Iter" begin
+
+
+    @test collect("ab") == ['a', 'b']
+
+
+
+
+    # only currying needs to be tested with Iterator synonyms
+    @test [1, 2, 3] |> filter_(isodd) |> collect == [1, 3]
+    @test [1, 2, 3] |> filter_(isodd)            != [1, 3]
+
+    struct IntWrapper  i::Int64  end  # also testing constructor here
+    @test [1, 2] |> map_(IntWrapper) |> collect == [IntWrapper(1), IntWrapper(2)]
+    @test [1, 2] |> map_(IntWrapper)            != [IntWrapper(1), IntWrapper(2)]
+
+    @test [1, 2, 3] |> take_(2) |> collect == [1, 2]
+    @test [1, 2, 3] |> take_(2)            != [1, 2]
+
+    @test [1, 2, 3] |> partition_(2) |> collect == [[1, 2], [3]]
+    @test [1, 2, 3] |> partition_(2)            != [[1, 2], [3]]
+
+    @test [1,2,3] |> dropwhile_(isodd) |> collect == [2, 3]
+    @test [1,2,3] |> dropwhile_(isodd)            != [2, 3]
+
+    @test [[1, 2], [3]] |> flatten_ |> collect == [1, 2, 3]
+    @test [[1, 2], [3]] |> flatten_            != [1, 2, 3]
+
+
+
+
+    # check currying for safe in-REPL collecting variants (implies calling the non-currying ones)
+    @test [1, 2, 3] |> fl(isodd) == [1, 3]
+    @test [1, 2] |> mp(IntWrapper) == [IntWrapper(1), IntWrapper(2)]
+    @test [1, 2, 3] |> tk(2) == [1, 2]
+    @test [1, 2, 3] |> pt(2) == [[1, 2], [3]]
+    @test [1,2,3] |> drwhile(isodd) == [2, 3]
+    @test [[1, 2], [3]] |> flat == [1, 2, 3]
+
+
+
+
+
+    # @test [1,2,3,4] |> cn(x->x>=3) == 2
+
+    # @test [1,2,3,"kjh"] |> fl(is(Int64)) |> length == 3
+
+    # @test Dict(1=>3, 2=>9) |> flbyval(x->x==9) |> is(AbstractDict) == true
+
+    # @test OrderedDict(1=>9, 2=>3) |> sortbyval |> first == (2=>3)
+
+    # @test (1,2,3) |> second == 2
+    # @test [1,2,3] |> second == 2
+    # @test 1:3 |> second == 2    
+end
+
