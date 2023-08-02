@@ -27,7 +27,7 @@ function getopt(;from=ARGS)::Union{String, Nothing}
 end
 
 
-function getargs(stypes::AbstractString="ss*"; from=ARGS, stopatopt=true, must_exhaust=true, opt=:auto)  # opt ist just used for error msgs
+function getargs(stypes::AbstractString="ss*"; from=ARGS, stopatopt=true, mustexhaust=true, opt=:auto)  # opt ist just used for error msgs
     RET = []
     tryto = Dict('s'=>identity, 'i'=>trytoint, 'f'=>trytofloat)
     typenames = Dict('i'=>"integer", 'f'=>"float")
@@ -60,13 +60,13 @@ function getargs(stypes::AbstractString="ss*"; from=ARGS, stopatopt=true, must_e
         end
     end
 
-    !must_exhaust  &&  ( return RET )
+    !mustexhaust  &&  ( return RET )
     length(from) == 0  &&  ( return RET )
     isopt(first(from))  &&  ( return RET )
     erroruser("too many arguments given")
 end
-getargs0(; from=ARGS, stopatopt=true, opt=_lastopt) = getargs("s*"; from=from, stopatopt=stopatopt, opt=opt)
-function getarg(stype::Union{AbstractString, Char}="s"; from=ARGS, stopatopt=true, opt=_lastopt)
+getargs0(; from=ARGS, stopatopt=true, opt=:auto) = getargs("s*"; from=from, stopatopt=stopatopt, opt=opt)
+function getarg(stype::Union{AbstractString, Char}="s"; from=ARGS, stopatopt=true, opt=:auto)
     length(stype) != 1  &&  error("getarg: invalid stype '$(stype)': only single type specifier allowed")
     return getargs(string(stype); from=from, stopatopt=stopatopt, opt=opt)[1]
 end

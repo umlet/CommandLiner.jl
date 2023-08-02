@@ -15,12 +15,15 @@ module CommandLiner
 
 
 
-# iterator tweak for certain REPL use cases
-# include("iterhack.jl")
-# import .IterHack: map, filter
-# include("iterhack.jl_exports")
-
-
+# _ = n/a; code in pctg; <empty> = to do
+# status    code    base    exports     test    doc
+# Err       100     x       x           x       x
+# Str       50      _       x           x       
+# Iter      100     _       x           x
+# Main      100     _       x           _       x
+# Getopt     90     _       x                   x       <- lastopt..
+#
+# README.md 50
 
 
 # zero deps

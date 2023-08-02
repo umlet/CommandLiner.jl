@@ -51,8 +51,8 @@ tk(args...)  = take_(args...) |> collect
 tk(n::Int64) = X -> tk(X, n)
 tk(X) = tk(X, 10) 
 
-pt(args...) = partition_(args...) |> collect
-pt(n::Int64) = X -> pt(X, n)
+part(args...) = partition_(args...) |> collect
+part(n::Int64) = X -> part(X, n)
 
 drwhile(args...) = dropwhile_(args...) |> collect
 drwhile(f)       = X -> drwhile(f, X)
@@ -71,30 +71,30 @@ flat(args...) = flatten_(args...) |> collect
 
 
 
-# TODO ???
-# curried 'foreach'
+
+# curried 'foreach' -- can't shadow for same reasons as Base.map
 apply(args...) = foreach(args...)
 apply(f::Function) = X -> apply(f, X)
 
 
 
-# TODO ???
-# yet more synonyms
-hd(args...) = tk(args...)
 
-cn(args...)     = count(args...)
+# yet more synonyms
+#hd(args...) = tk(args...)  # TODO name useful enough?
+
+cn(args...)     = count(args...)  # example: X |> cn(is(SomeType))
 cn(f::Function) = X -> count(f, X)
 
+is(args...) = isa(args...)
 is(T::Type) = x -> isa(x, T)
 
 
 
 
 # silter/sort specials
-flbyval(f::Function, d::AbstractDict) = typeof(d)( fl(x->f(x[2]), d) )
+flbyval(f::Function, d::AbstractDict) = typeof(d)( filter_(x->f(x[2]), d) )
 flbyval(f::Function)                  = X -> flbyval(f, X)
 
-# TODO reversable..
 sortbyval(d::OrderedDict; args...) = sort(d; byvalue=true, args...)
 # by key is default
 
@@ -105,12 +105,12 @@ sortbyval(d::OrderedDict; args...) = sort(d; byvalue=true, args...)
 second(X::Tuple)         = X[2]
 second(X::AbstractArray) = X[eachindex(X)[2]]
 function second(itr)
-    i = 1
+    skip = true
     for x in itr
-        i == 2  &&  ( return x )
-        i += 1
+        skip  &&  ( skip = false;  continue ) 
+        return x
     end
-    throw(ArgumentError("collection too small"))
+    throw(ArgumentError("iterator has no second item"))
 end
 
 
@@ -126,7 +126,18 @@ end
 
 
 
+# use before Base.map:
+# julia> import CommandLiner: map, filter
+baremodule Hack
+    import Base
+    import Base.Iterators
 
+    filter(args...) = Base.collect(Base.Iterators.filter(args...))
+    filter(f::Function) = X -> filter(f, X)
+
+    map(args...) = Base.collect(Base.Iterators.map(args...))
+    map(f) = X -> map(f, X)  # no restriction to Function in order to allow constructors
+end
 
 
 

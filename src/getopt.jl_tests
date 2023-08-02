@@ -1,0 +1,45 @@
+
+
+@testset "Getopt" begin
+
+    # get valid first option
+    F = split("-x a b")
+    opt = getopt(; from=F)
+    @test opt == "-x"
+
+    # no first option, only args
+    F = split("a b")
+    opt = getopt(; from=F)
+    @test opt === nothing
+
+    # sequence of option and default (1+)-args
+    F = split("-x a b -y c")
+    opt = getopt(; from=F)
+    @test opt == "-x"
+    args = getargs(; from=F)
+    @test args == ["a", "b"]
+
+
+
+
+    # stopatopt
+    F = split("-x a b -y c")
+    args = getargs(; from=F, stopatopt=false)
+    @test args == ["-x", "a", "b", "-y", "c"]
+
+    # mustexhaust ok
+    F = split("a b -y c")
+    args = getargs("ss"; from=F, mustexhaust=true)
+    @test args == ["a", "b"]
+
+    # mustexhaust error
+    F = split("a b b2 -y c")
+    @test begin
+        try
+            args = getargs("ss"; from=F, mustexhaust=true)
+        catch e
+            true
+        end
+    end
+
+end

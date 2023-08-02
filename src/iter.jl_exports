@@ -4,7 +4,7 @@ export cl
 
 export filter_, map_, take_, partition_, dropwhile_, flatten_
 
-export fl,      mp,   tk,    pt,         drwhile,    flat
+export fl,      mp,   tk,    part,       drwhile,    flat
 
 
 export apply
@@ -23,4 +23,9 @@ export second
 
 
 export peekgeneric
+
+
+
+
+export Hack
 

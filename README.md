@@ -38,7 +38,7 @@ Use in a `while length(ARGS)>0` loop:
 
 if `stopatopt` is `false`, all command line strings are treated as arguments (default distinguishes between options and arguments).
 
-if `must_exhaust` is `false`, you can read n arguments, and leave additional, "naked arguments" for later parsing (default fails if there are valid arguments left, i.e., if the next string is not an option).
+if `mustexhaust` is `false`, you can read n arguments, and leave additional, "naked arguments" for later parsing (default fails if there are valid arguments left, i.e., if the next string is not an option).
 
 <br>
 <br>

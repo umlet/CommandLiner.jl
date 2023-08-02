@@ -13,3 +13,5 @@ include("../src/error.jl_tests")
 
 include("../src/iter.jl_tests")
 
+include("../src/getopt.jl_tests")
+
