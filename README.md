@@ -28,7 +28,24 @@ Good option parsers for Julia exist, see [ArgParse.jl](https://github.com/carlob
 - is maximally **local** -- options are defined where the are being `if`-ed upon;
 - checks and **converts** int/float types, and a string like `-8` is treated as an *argument* instead of an *option*.
 
-Use in a `while length(ARGS)>0` loop:
+In a script, you alternately call `getopt` to get an option like `-x`, and `getargs` to get its arguments:
+```julia
+function main()  # your main function
+    while length(ARGS) > 0
+        opt = getopt()
+        if opt == "-x"
+            args = getargs()
+            ..
+        elseif opt === nothing  # "naked" arguments without preceding option
+            args = getargs()
+            ..
+        else
+            error("unknown option")
+        end
+    end
+end
+```
+
 - `getopt()` pops and returns the next option from ARGS; if no option is found (i.e., string not starting with "--" or "-"), returns `nothing` (the arguments that would possibly follow are "naked").
 - `getargs()` returns all arguments up to the next option; must find at least 1.
 - `getargs0()` returns all arguments up to the next option (0 or more).
@@ -38,7 +55,7 @@ Use in a `while length(ARGS)>0` loop:
 
 if `stopatopt` is `false`, all command line strings are treated as arguments (default distinguishes between options and arguments).
 
-if `mustexhaust` is `false`, you can read n arguments, and leave additional, "naked arguments" for later parsing (default fails if there are valid arguments left, i.e., if the next string is not an option).
+if `mustexhaust` is `false`, you can read n arguments, and leave additional, "naked arguments" for later parsing (default fails if there are valid arguments left, i.e., if the next string in `ARGS` is not an option).
 
 <br>
 <br>
@@ -57,7 +74,7 @@ The macro `@main` is a shortcut for the file guard in a script; it calls **your*
 ### Curry Hack
 
 ```julia
-julia> import CommandLiner: map, filter
+julia> import CommandLiner.Iter.Hack: map, filter
 
 julia> [1,2,3] |> map(sqrt)
 ...
