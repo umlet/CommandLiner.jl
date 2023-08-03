@@ -1,4 +1,0 @@
-
-
-Base.show(io::IO, ::MIME"text/plain", x::AbstractShortcut) = _show(io, x)
-

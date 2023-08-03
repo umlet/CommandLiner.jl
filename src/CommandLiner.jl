@@ -20,8 +20,13 @@ module CommandLiner
 # Err       100     x       x           x       x
 # Str       50      _       x           x       
 # Iter      100     _       x           x
+# Exe
+# Group
+# Convert
+# InOut
+# Getopt    100     _       x           x       x
 # Main      100     _       x           _       x
-# Getopt     90     _       x                   x       <- lastopt..
+# RevAss
 #
 # README.md 50
 
@@ -81,13 +86,6 @@ include("main.jl_exports")
 include("reverseassign.jl")  # inner function not exported; for "using" it in REPL
 import .ReverseAssign: reverseassign
 include("reverseassign.jl_exports")
-
-
-
-
-include("shortcut.jl")
-using .Shortcut
-include("shortcut.jl_exports")
 
 
 

@@ -38,8 +38,23 @@
         try
             args = getargs("ss"; from=F, mustexhaust=true)
         catch e
-            true
+            isa(e, EnduserError)
         end
     end
 
+
+
+
+    # conversions
+    F = split("a -1 -2.0")
+    args = getargs("sif"; from=F)
+    @test args == ["a", -1, -2.0]
+
+    F = split("a -x")
+    arg = getarg(; from=F)
+    @test arg == "a"
+
+    F = []
+    args = getargs0(; from=F)
+    @test args == []
 end

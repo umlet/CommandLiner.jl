@@ -12,14 +12,15 @@
     end
 
     # full backtrace behavior: use error()
+    CommandLiner.Error.CONF.showfullbt = true
     @test begin
-        CommandLiner.Error.CONF.showfullbt = true
         try
             erroruser("foo")            
         catch e
             !isa(e, EnduserError)
         end
     end
+    CommandLiner.Error.CONF.showfullbt = false
 
 end
 
