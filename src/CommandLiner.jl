@@ -26,7 +26,7 @@ module CommandLiner
 # InOut
 # Getopt    100     _       x           x       x
 # Main      100     _       x           _       x
-# RevAss
+# RevAss    100     _       x                   x
 #
 # README.md 50
 
@@ -84,8 +84,9 @@ include("main.jl_exports")
 
 
 include("reverseassign.jl")  # inner function not exported; for "using" it in REPL
-import .ReverseAssign: reverseassign
+using .ReverseAssign
 include("reverseassign.jl_exports")
+export ReverseAssign  # to allow for help synonym
 
 
 
