@@ -95,7 +95,7 @@ CommandLiner also exports the names `filter_`, `map_` etc. as synonyms for the `
 julia> x
 ERROR: UndefVarError: `x` not defined
 
-julia> using CommandLiner.ReverseAssign
+julia> ReverseAssign.enable()
 
 julia> 1.0 |> sin |> cos |> sin |> :x
 0.6181340709529279
