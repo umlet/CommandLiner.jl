@@ -1,0 +1,14 @@
+
+
+@testset "InOut" begin
+
+    iobuf = IOBuffer("a\n\nb\n#xxx\n")
+    @test eachln(iobuf) |> collect == ["a", "b"]
+
+    iobuf = IOBuffer("a\n\nb\n")
+    @test eachln(iobuf; skipempty=false) |> collect == ["a", "", "b"]
+
+    iobuf = IOBuffer("a\n\nb\n#xxx\n")
+    @test eachln(iobuf; skipcomments=false) |> collect == ["a", "b", "#xxx"]
+
+end

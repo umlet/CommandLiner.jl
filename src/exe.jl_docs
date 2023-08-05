@@ -2,10 +2,14 @@
 
 
 """
-    exe([string, strin,..]; fail=true, splitlines=true)
+    exe([string, strin,..]; fail=true, onlystdout=stdout, splitlines=true)
 
-Wrapper to `run(::Command)`. Fails with exception on non-tezo exit code OR returns tuple of (returncode, outs, errs).
+Wrapper to to run commands and grab rc/stdout/stderr.
 
-The latter two are split into lines by default; strings otherwise.
+Fails with exception on non-zero exit code if `fail==true`.
+
+If `onlystdout==true`, returns either string or vector of strings from stdout, depending on `splitlines`.
+
+If `onlystdout==false`, returns (rc, out, err)- or (rc, outs, errs)-tuple, again depending on split/no split.
 """
 :exe

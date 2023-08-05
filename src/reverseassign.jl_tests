@@ -1,0 +1,19 @@
+
+
+@testset "ReverseAssign" begin
+
+    @test begin
+        try
+            1 |> :___VariableNameForReverseAssignTest___
+        catch e
+            true
+        end
+    end
+
+    # Calling this in a testset does not seem to "propagate" the variable to the Main scope; good but not sure why.. ???
+    ReverseAssign.enable()
+    1 |> :___VariableNameForReverseAssignTest___
+    @test ___VariableNameForReverseAssignTest___ == 1
+
+end
+

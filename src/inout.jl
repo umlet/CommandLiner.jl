@@ -7,10 +7,10 @@ using ..Iter
 
 
 
-function fiter(f #=..can be IO=#; skip_comments::Bool=true, skip_emptylines::Bool=true, stateful::Bool=true)
+function eachln(f #=..can be IO=#; skipcomments::Bool=true, skipempty::Bool=true, stateful::Bool=false)
     itr = (f == "-" )  ?  eachline(stdin)  :  eachline(f)
-    if skip_comments    itr = ifilter(!iscomment, itr)  end
-    if skip_emptylines  itr = ifilter(!isempty, itr)    end
+    if skipcomments     itr = filter_(!iscomment, itr)  end
+    if skipempty        itr = filter_(!isempty, itr)    end
     if stateful         itr = Iterators.Stateful(itr)   end
     return itr
 end

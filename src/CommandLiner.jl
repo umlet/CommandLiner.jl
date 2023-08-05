@@ -7,8 +7,6 @@ Module with helpers:
 - option parsing; SIGPIPE; user-facing exceptions..
 - currying `map` and `filter` overrides
 - hack for reverse assignment at end of pipe chain
-
-See: `getopt` `erroruser` `@main` `tameerror` `reverseassign` `ext` `exe`
 """
 module CommandLiner
 
@@ -20,13 +18,13 @@ module CommandLiner
 # Err       100     x       x           x       x
 # Str       50      _       x           x       
 # Iter      100     _       x           x
-# Exe
+# Exe       100     _       x           x       x
 # Group
 # Convert
-# InOut
+# InOut     100     _       x           x       n/a
 # Getopt    100     _       x           x       x
 # Main      100     _       x           _       x
-# RevAss    100     _       x                   x
+# RevAss    100     _       x           x       x
 #
 # README.md 50
 

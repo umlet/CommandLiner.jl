@@ -1,0 +1,17 @@
+
+
+@testset "Exe" begin
+
+    ls = exe(["ls", "-a"])
+    @test "." in ls
+
+    s = exe(["ls", "-a"]; splitlines=false)
+    @test '.' in s
+
+    Rsplit = exe(["ls", "-a"]; onlystdout=false)
+    @test "." in Rsplit.outs
+
+    Rnosplit = exe(["ls", "-a"]; onlystdout=false, splitlines=false)
+    @test '.' in Rnosplit.out
+
+end
