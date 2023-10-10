@@ -25,6 +25,7 @@ export second
 export peekgeneric
 
 
+export partitionby
 
 
 export Hack

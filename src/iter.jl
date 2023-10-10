@@ -142,6 +142,48 @@ end
 
 
 
+mutable struct PartitionBy{T}  # mutable to avoid buffer copy & to keep inner iterator state
+    const inneritr
+
+    const f  # could also be constructor
+    fval_current
+
+    buf::Vector{T}
+
+    function PartitionBy(f, itr)
+        et = eltype(itr)
+        buf = Vector{et}()
+        return new{et}(Base.Iterators.Stateful(itr),   f, missing,   buf)
+    end
+end
+function Base.iterate(itr::PartitionBy, _state=nothing)
+    while !isempty(itr.inneritr)
+        x = first(itr.inneritr);  fval = itr.f(x)
+        if isempty(itr.buf)
+            push!(itr.buf, x);  itr.fval_current = fval
+            continue
+        end
+
+        # can add element
+        fval == itr.fval_current  &&  ( push!(itr.buf, x);  continue )
+
+        # can't add element
+        itr.buf, buf  =  [], itr.buf
+        push!(itr.buf, x);  itr.fval_current = fval
+        return (buf, _state)
+    end
+    # inner iterator done..
+    if !isempty(itr.buf)
+        itr.buf, buf  =  [], itr.buf
+        return (buf, _state)
+    end
+    return nothing
+end
+partitionby(f, itr) = PartitionBy(f, itr)
+partitionby(f) = X -> partitionby(f, X)
+
+
+
 
 include("iter.jl_exports")
 end # module
