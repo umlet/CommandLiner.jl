@@ -5,26 +5,9 @@
     EnduserError(msg, exitcode=99)
 
 The function `erroruser`, similarly to `Base.error`, throws the `EnduserError` exception.
-This exception is meant to signal "obvious" errors to *end users*,
+This exception is meant to signal obvious errors to *end users*,
 for example "file 'foo' not found" or "invalid command line option '--foo'".
-No backtrace is/should be output, as it often adds little and distracts much.
-
-(Use `CommandLiner.Error.CONF.showfullbt = true` to override this "no backtrace" behavior later.) 
+No backtrace is output; if you catch this exception, you should also suppress it.
 """
 :erroruser, :EnduserError
-
-
-"""
-    tameerror(f::Function)
-
-Wraps a call to function f in a try/catch:
-* On SIGPIPE:        no error msg; no backtrace; exit code 0   (for broken Unix pipes).
-* On interrupt:      no error msg; no backtrace; exit code 130 (even in script).
-* On `EnduserError`: error msg but no backtrace; exit code is the exception's one.
-* ..rethrows otherwise.
-
-(Use 'CommandLiner.Error.CONF.showfullbt = true' to override this "no backtrace" behavior later.) 
-"""
-:tameerror
-
 

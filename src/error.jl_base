@@ -1,5 +1,9 @@
 
 
-Base.showerror(io::IO, ex::EnduserError) = print(io, ex.msg)
-Base.showerror(io::IO, ex::EnduserError, bt; backtrace=false) = showerror(io, ex)
+# inner/core error message (after standard red "ERROR: "-prefix)
+Base.showerror(io::IO, ex::EnduserError) = print(io, ex.msg) 
+
+
+# this would usually add backtrace after a call to showerror(io,ex); we short-circuit
+Base.showerror(io::IO, ex::EnduserError, _bt; backtrace=true) = showerror(io, ex)
 

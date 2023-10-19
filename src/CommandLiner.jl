@@ -74,9 +74,9 @@ include("getopt.jl_exports")
 
 
 
-include("main.jl")
-using .Main
-include("main.jl_exports")
+include("mainy.jl")
+using .Mainy
+include("mainy.jl_exports")
 
 
 
