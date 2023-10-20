@@ -1,0 +1,101 @@
+
+
+"""
+    ext(path) -> String or nothing
+
+Returns the path extension. Behaves similarly to `Base.splitext(s)[2]`, but does not retain the leading '.'.
+
+Original `splitext`:
+- "myfile.txt"    -> ".txt"
+- "myfile."       -> "."
+- "myfile"        -> ""
+- ".myfile"       -> ""
+- "."             -> ""
+
+New `ext`:
+- "myfile.txt"    -> "txt"
+- "myfile."       -> ""
+- "myfile"        -> nothing
+- ".myfile"       -> nothing
+- "."             -> nothing
+
+See also `exty`, `hasext`.
+"""
+:ext
+
+
+
+
+"""
+    exty(path) ->  Symbol
+
+Returns a symbol representing the path extension:
+
+```julia
+julia> exty("myfile.jpg")
+:jpeg
+
+julia> exty("myfile.jpeg")
+:jpeg
+```
+
+This symbol can then be used with `hasext` to capture all extensions in an extension group, e.g., {"jpg", "jpeg", and "jpe"}.
+
+You can use `FileJockey.Ext.show_extgroups()` to show the extension groups, and `FileJockey.Ext.register_extgroups(::Vector{Vector{String}})` to redefine them.
+
+Use `ext` if you want to distinguish between special cases of empty extensions, and `exty` if not:
+
+```julia
+julia> (ext("myfile"), exty("myfile"))
+(nothing, :_empty_)
+
+julia> (ext("myfile."), exty("myfile."))
+("", :_empty_)
+```
+
+If an extension is unknown:
+```julia
+julia> (ext("myfile.xyz"), exty("myfile.xyz"))
+("xyz", :_unreg_)
+```
+
+You can overwrite the two special symbols `:_empty_` and `:_unreg_` via `FileJockey.Ext.setsym_empty()` and `FileJockey.Ext.setsym_unreg()`.
+"""
+:exty
+
+
+
+
+"""
+    hasext(path, ext::String) -> Bool
+    hasext(path, exty::Symbol) -> Bool
+
+Used with a string extension, it checks if the path's extension is the same; it ignores casing:
+
+```julia
+julia> hasext("myfile.txt", "txt")
+true
+
+julia> hasext("myfile.TXT", "txt")
+true
+
+julia> hasext("myfile.jpeg", "jpg")
+false
+```
+
+Used with a symbol, it checks whether the path's extension is within that symbol's extension group:
+
+```julia
+julia> hasext("myfile.jpeg", :jpeg)
+true
+
+julia> hasext("myfile.jpg", :jpeg)
+true
+
+julia> hasext("myfile.jpeg", :jpg)  # any extension in an extension group works as a symbol for that group
+true
+```
+
+See also `exty`.
+"""
+:hasext

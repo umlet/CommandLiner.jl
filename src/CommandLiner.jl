@@ -29,7 +29,7 @@ module CommandLiner
 # README.md 50
 
 
-# zero deps
+# no deps
 include("error.jl")
 using .Error
 include("error.jl_exports")
@@ -46,6 +46,13 @@ include("exe.jl")
 using .Exe
 include("exe.jl_exports")
 
+include("ext.jl")
+using .Ext
+include("ext.jl_exports")
+
+include("colorbox.jl")
+using .ColorBox
+include("colorbox.jl_exports")
 
 
 
@@ -74,7 +81,7 @@ include("getopt.jl_exports")
 
 
 
-include("mainy.jl")
+include("mainy.jl")  # dep on Error
 using .Mainy
 include("mainy.jl_exports")
 

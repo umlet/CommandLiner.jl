@@ -6,5 +6,5 @@ export splitind1, splitind2
 
 export jn
 
-export ext
+#export ext
 
