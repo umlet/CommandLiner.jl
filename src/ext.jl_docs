@@ -41,7 +41,7 @@ julia> exty("myfile.jpeg")
 
 This symbol can then be used with `hasext` to capture all extensions in an extension group, e.g., {"jpg", "jpeg", and "jpe"}.
 
-You can use `FileJockey.Ext.show_extgroups()` to show the extension groups, and `FileJockey.Ext.register_extgroups(::Vector{Vector{String}})` to redefine them.
+You can use `CommandLiner.Ext.show_extgroups()` to show the extension groups, and `CommandLiner.Ext.register_extgroups(::Vector{Vector{String}})` to redefine them.
 
 Use `ext` if you want to distinguish between special cases of empty extensions, and `exty` if not:
 
@@ -53,13 +53,7 @@ julia> (ext("myfile."), exty("myfile."))
 ("", :_empty_)
 ```
 
-If an extension is unknown:
-```julia
-julia> (ext("myfile.xyz"), exty("myfile.xyz"))
-("xyz", :_unreg_)
-```
-
-You can overwrite the two special symbols `:_empty_` and `:_unreg_` via `FileJockey.Ext.setsym_empty()` and `FileJockey.Ext.setsym_unreg()`.
+You can overwrite the symbol used for missing extensions (default: `:_empty_`) via `CommandLiner.Ext.setsym_empty()`.
 """
 :exty
 
@@ -70,26 +64,26 @@ You can overwrite the two special symbols `:_empty_` and `:_unreg_` via `FileJoc
     hasext(path, ext::String) -> Bool
     hasext(path, exty::Symbol) -> Bool
 
-Used with a string extension, it checks if the path's extension is the same; it ignores casing:
+Checks a path's extension. A string must match the extension exactly:
 
 ```julia
 julia> hasext("myfile.txt", "txt")
 true
 
 julia> hasext("myfile.TXT", "txt")
-true
-
-julia> hasext("myfile.jpeg", "jpg")
 false
 ```
 
-Used with a symbol, it checks whether the path's extension is within that symbol's extension group:
+A symbol matches in an extension group, and is also case-insensitive:
 
 ```julia
 julia> hasext("myfile.jpeg", :jpeg)
 true
 
 julia> hasext("myfile.jpg", :jpeg)
+true
+
+julia> hasext("myfile.JPEG", :jpeg)
 true
 
 julia> hasext("myfile.jpeg", :jpg)  # any extension in an extension group works as a symbol for that group
@@ -99,3 +93,4 @@ true
 See also `exty`.
 """
 :hasext
+

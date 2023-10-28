@@ -6,6 +6,10 @@ Julia is well-suited for interactive, REPL-like applications, as well as a viabl
 
 * Maximally-local and flexible **option parsing**.
 
+* Custom file extension groups like (as in `:jpeg` == "jpg" or "JPG" or "Jpeg")
+
+* Terse and **deferred color output**
+
 * **Interrupt** and **SIGPIPE** handling.
 
 * Tweaks to specific **error message formats** aimed not at developers but at application end users.
@@ -20,6 +24,8 @@ Julia is well-suited for interactive, REPL-like applications, as well as a viabl
 
 <br>
 <br>
+
+
 
 ### "Local" Option Parsing
 
@@ -60,16 +66,55 @@ if `mustexhaust` is `false`, you can read n arguments, and leave additional, "na
 <br>
 <br>
 
+
+
+### File Extension Groups
+
+`hasext(path, "jpeg")` and `hasext(path, :jpeg)` check for file extensions. The first (with a string) checks for identity; the latter checks whether a file extension belongs to a group like {"jpg", "jpeg", "jpe"}. You can define your own groups.
+
+It supports piping (and thus `filter(hasext(..))`):
+
+```julia
+julia> "mypic.jpg" |> hasext(:jpeg)
+true
+```
+
+[in progress]
+
+<br>
+<br>
+
+
+
+### Terse and Deferred Color Output
+
+Wrapper type with custom `print` (calling `printstyled`) that lets you defer coloring outputs. Terse syntax to make coloring less intrusive.
+
+```julia
+julia> x = Cbx("Hello", "r!")
+Cbx("Hello", Base.Pairs{Symbol, Any, Tuple{Symbol, Symbol}, NamedTuple{(:color, :reverse), Tuple{Symbol, Bool}}}(:color => :light_red, :reverse => true))
+
+julia> print(x)  # no printstyled needed!
+```
+..will output in red & inverted.
+
+<br>
+<br>
+
+
+
 ### Erroruser and @main Guard
 
 `EnduserError` is an exception type meant to signal that the end user would not benefit from a full backtrace, e.g., with errors such as "file not found". Thrown with `erroruser(msg)`.
 
-The function `tameerror(f::Function)` calls `f`, and suppresses SIGPIPE exceptions gracefully, handles <Ctrl+C>..
+The function `hushexit(f::Function)` calls `f`, and suppresses SIGPIPE exceptions gracefully, handles <Ctrl+C>..
 
-The macro `@main` is a shortcut for the file guard in a script; it calls **your** `main` function via `tameerror(main)`.
+The macro `@main` is a shortcut for the file guard in a script; it calls **your** `main` function via `hushexit(main)`.
 
 <br>
 <br>
+
+
 
 ### Curry Hack
 
@@ -89,6 +134,8 @@ CommandLiner also exports the names `filter_`, `map_` etc. as synonyms for the `
 <br>
 <br>
 
+
+
 ### Reverse-Assign Hack
 
 ```julia
@@ -105,3 +152,14 @@ julia> x
 ```
 It works by overwriting the function call operator for `Symbol`. We put our worries if this is safe into the laps of the gods.
 
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+#### Version History
+* 0.3 Colors; extensions
+* 0.2 Initial version: command line options; enduser error; curry and reverse-assign hacks; tests
