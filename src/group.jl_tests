@@ -1,0 +1,9 @@
+
+
+@testset "Group" begin
+
+    v = ["foo", "foofoo", "foofoofoo", "bar", "barbar", "zoo", "zoo2", "zoo3", "zoo4"]
+    d = group(v; fkey=first, freduce=length, fhaving=(>(2)), sort=true, sort_byvalue=true, sort_by=x->x^2, sort_rev=true)
+    @test first(d) == ('z'=>4)
+
+end

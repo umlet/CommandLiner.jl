@@ -21,3 +21,5 @@ include("../src/exe.jl_tests")
 
 include("../src/inout.jl_tests")
 
+include("../src/group.jl_tests")
+

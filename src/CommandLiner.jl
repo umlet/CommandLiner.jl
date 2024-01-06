@@ -19,12 +19,13 @@ module CommandLiner
 # Str       50      _       x           x       
 # Iter      100     _       x           x
 # Exe       100     _       x           x       x
-# Group
+# Group     80      _       x           x
 # Convert
 # InOut     100     _       x           x       n/a
 # Getopt    100     _       x           x       x
 # Main      100     _       x           _       x
 # RevAss    100     _       x           x       x
+# Tably
 #
 # README.md 50
 
@@ -53,6 +54,10 @@ include("ext.jl_exports")
 include("colorbox.jl")
 using .ColorBox
 include("colorbox.jl_exports")
+
+include("tably.jl")
+using .Tably
+include("tably.jl_exports")
 
 
 
