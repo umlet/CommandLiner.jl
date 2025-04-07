@@ -21,6 +21,9 @@ module Exe
 # end
 
 
+
+
+## NOTE: possibly get updated version from UnisonK..::ucmfront.jl
 function exe(cmd::Cmd; fail=true, okexits=[], onlystdout=true, splitlines=true)
     bufout = IOBuffer()                                                     ; buferr = IOBuffer()
     process = run(pipeline(ignorestatus(cmd), stdout=bufout, stderr=buferr))
