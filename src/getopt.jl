@@ -1,3 +1,5 @@
+# ===========>>>>   USE optatgs.jl now
+
 module Getopt
 
 # NOTE: REAFCTOR FROM PYTHON CODE BELOW !!!
